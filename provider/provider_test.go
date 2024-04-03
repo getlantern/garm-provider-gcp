@@ -56,7 +56,6 @@ func TestCreateInstance(t *testing.T) {
 		ProjectId:        "my-project",
 		NetworkID:        "my-network",
 		SubnetworkID:     "my-subnetwork",
-		CredentialsFile:  "path/to/credentials.json",
 		ExternalIPAccess: true,
 	}
 	gcpProvider.gcpCli.SetClient(mockClient)
@@ -107,7 +106,6 @@ func TestGetInstance(t *testing.T) {
 		ProjectId:        "my-project",
 		NetworkID:        "my-network",
 		SubnetworkID:     "my-subnetwork",
-		CredentialsFile:  "path/to/credentials.json",
 		ExternalIPAccess: true,
 	}
 	gcpProvider.gcpCli.SetClient(mockClient)
@@ -157,7 +155,6 @@ func TestDeleteInstance(t *testing.T) {
 		ProjectId:        "my-project",
 		NetworkID:        "my-network",
 		SubnetworkID:     "my-subnetwork",
-		CredentialsFile:  "path/to/credentials.json",
 		ExternalIPAccess: true,
 	}
 	gcpProvider.gcpCli.SetClient(mockClient)
@@ -185,7 +182,6 @@ func TestListInstances(t *testing.T) {
 		ProjectId:        "my-project",
 		NetworkID:        "my-network",
 		SubnetworkID:     "my-subnetwork",
-		CredentialsFile:  "path/to/credentials.json",
 		ExternalIPAccess: true,
 	}
 	gcpProvider.gcpCli.SetClient(mockClient)
@@ -297,7 +293,6 @@ func TestStop(t *testing.T) {
 		ProjectId:        "my-project",
 		NetworkID:        "my-network",
 		SubnetworkID:     "my-subnetwork",
-		CredentialsFile:  "path/to/credentials.json",
 		ExternalIPAccess: true,
 	}
 	gcpProvider.gcpCli.SetClient(mockClient)
@@ -327,7 +322,6 @@ func TestStart(t *testing.T) {
 		ProjectId:        "my-project",
 		NetworkID:        "my-network",
 		SubnetworkID:     "my-subnetwork",
-		CredentialsFile:  "path/to/credentials.json",
 		ExternalIPAccess: true,
 	}
 	gcpProvider.gcpCli.SetClient(mockClient)

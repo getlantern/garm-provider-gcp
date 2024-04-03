@@ -36,7 +36,6 @@ func NewConfig(cfgFile string) (*Config, error) {
 type Config struct {
 	ProjectId        string `toml:"project_id"`
 	Zone             string `toml:"zone"`
-	CredentialsFile  string `toml:"credentials_file"`
 	NetworkID        string `toml:"network_id"`
 	SubnetworkID     string `toml:"subnetwork_id"`
 	ExternalIPAccess bool   `toml:"external_ip_access"`
@@ -54,9 +53,6 @@ func (c *Config) Validate() error {
 	}
 	if c.SubnetworkID == "" {
 		return fmt.Errorf("missing subnetwork_id")
-	}
-	if c.CredentialsFile == "" {
-		return fmt.Errorf("missing credentials_file")
 	}
 
 	return nil

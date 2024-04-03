@@ -18,7 +18,6 @@ package client
 import (
 	"context"
 	"fmt"
-	"os"
 
 	compute "cloud.google.com/go/compute/apiv1"
 	"cloud.google.com/go/compute/apiv1/computepb"
@@ -28,9 +27,6 @@ import (
 	"github.com/cloudbase/garm-provider-gcp/internal/util"
 	"github.com/googleapis/gax-go/v2"
 	"github.com/googleapis/gax-go/v2/apierror"
-	"golang.org/x/oauth2/google"
-	gcompute "google.golang.org/api/compute/v1"
-	"google.golang.org/api/option"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -46,19 +42,7 @@ var (
 )
 
 func NewGcpCli(ctx context.Context, cfg *config.Config) (*GcpCli, error) {
-	jsonKey, err := os.ReadFile(cfg.CredentialsFile)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read JSON key file: %w", err)
-	}
-	config, err := google.JWTConfigFromJSON(jsonKey, gcompute.CloudPlatformScope)
-	if err != nil {
-		return nil, fmt.Errorf("failed to create JWT config: %w", err)
-	}
-	// Create an HTTP client using the JWT Config
-	client := config.Client(ctx)
-
-	// Now use this client to create a Compute Engine client
-	computeClient, err := compute.NewInstancesRESTClient(ctx, option.WithHTTPClient(client))
+	computeClient, err := compute.NewInstancesRESTClient(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("error creating compute service: %w", err)
 	}

@@ -36,7 +36,6 @@ func TestConfig_Validate(t *testing.T) {
 				ProjectId:        "my-project",
 				NetworkID:        "my-network",
 				SubnetworkID:     "my-subnetwork",
-				CredentialsFile:  "path/to/credentials.json",
 				ExternalIPAccess: true,
 			},
 			errString: nil,
@@ -47,7 +46,6 @@ func TestConfig_Validate(t *testing.T) {
 				ProjectId:        "my-project",
 				NetworkID:        "my-network",
 				SubnetworkID:     "my-subnetwork",
-				CredentialsFile:  "path/to/credentials.json",
 				ExternalIPAccess: true,
 			},
 			errString: fmt.Errorf("missing region"),
@@ -55,10 +53,9 @@ func TestConfig_Validate(t *testing.T) {
 		{
 			name: "MissingProjectID",
 			config: &Config{
-				Zone:            "europe-west1-d",
-				NetworkID:       "my-network",
-				SubnetworkID:    "my-subnetwork",
-				CredentialsFile: "path/to/credentials.json",
+				Zone:         "europe-west1-d",
+				NetworkID:    "my-network",
+				SubnetworkID: "my-subnetwork",
 			},
 			errString: fmt.Errorf("missing project_id"),
 		},
@@ -68,7 +65,6 @@ func TestConfig_Validate(t *testing.T) {
 				Zone:             "europe-west1-d",
 				ProjectId:        "my-project",
 				SubnetworkID:     "my-subnetwork",
-				CredentialsFile:  "path/to/credentials.json",
 				ExternalIPAccess: true,
 			},
 			errString: fmt.Errorf("missing network_id"),
@@ -79,21 +75,9 @@ func TestConfig_Validate(t *testing.T) {
 				Zone:             "europe-west1-d",
 				ProjectId:        "my-project",
 				NetworkID:        "my-network",
-				CredentialsFile:  "path/to/credentials.json",
 				ExternalIPAccess: true,
 			},
 			errString: fmt.Errorf("missing subnetwork_id"),
-		},
-		{
-			name: "MissingCredentialsFile",
-			config: &Config{
-				Zone:             "europe-west1-d",
-				ProjectId:        "my-project",
-				NetworkID:        "my-network",
-				SubnetworkID:     "my-subnetwork",
-				ExternalIPAccess: true,
-			},
-			errString: fmt.Errorf("missing credentials_file"),
 		},
 	}
 
@@ -116,7 +100,6 @@ func TestNewConfig(t *testing.T) {
 	zone = "europe-west1-d"
 	network_id = "projects/garm-testing/global/networks/garm"
 	subnetwork_id = "projects/garm-testing/regions/europe-west1/subnetworks/garm"
-	credentials_file = "/home/ubuntu/service-account-key.json"
 	external_ip_access = true
 	`
 	// Create a temporary file
@@ -138,6 +121,5 @@ func TestNewConfig(t *testing.T) {
 	require.Equal(t, "europe-west1-d", cfg.Zone, "Zone value did not match expected")
 	require.Equal(t, "projects/garm-testing/global/networks/garm", cfg.NetworkID, "NetworkId value did not match expected")
 	require.Equal(t, "projects/garm-testing/regions/europe-west1/subnetworks/garm", cfg.SubnetworkID, "SubnetworkId value did not match expected")
-	require.Equal(t, "/home/ubuntu/service-account-key.json", cfg.CredentialsFile, "CredentialsFile value did not match expected")
 	require.Equal(t, true, cfg.ExternalIPAccess, "ExternalIpAccess value did not match expected")
 }
