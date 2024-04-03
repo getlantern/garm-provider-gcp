@@ -11,7 +11,7 @@ require (
 	github.com/xeipuuv/gojsonschema v1.2.0
 	golang.org/x/oauth2 v0.16.0
 	google.golang.org/api v0.156.0
-	google.golang.org/protobuf v1.32.0
+	google.golang.org/protobuf v1.33.0
 )
 
 require (
