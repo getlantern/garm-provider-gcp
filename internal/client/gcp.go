@@ -197,7 +197,9 @@ func (g *GcpCli) DeleteInstance(ctx context.Context, instance string) error {
 	if err != nil && err.(*apierror.APIError).HTTPCode() != 404 {
 		return fmt.Errorf("unable to delete instance: %w", err)
 	}
-
+	if err != nil && err.(*apierror.APIError).HTTPCode() == 404 {
+		return nil
+	}
 	if err = WaitOp(op, ctx); err != nil {
 		return fmt.Errorf("unable to wait for the delete operation: %w", err)
 	}

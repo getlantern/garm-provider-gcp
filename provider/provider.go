@@ -18,6 +18,7 @@ package provider
 import (
 	"context"
 	"fmt"
+	"log/slog"
 
 	"github.com/cloudbase/garm-provider-common/execution"
 	"github.com/cloudbase/garm-provider-common/params"
@@ -58,6 +59,7 @@ func (g *GcpProvider) CreateInstance(ctx context.Context, bootstrapParams params
 	}
 	inst, err := g.gcpCli.CreateInstance(ctx, spec)
 	if err != nil {
+		slog.Error("error creating instance: %w", err)
 		return g.GetInstance(ctx, bootstrapParams.Name)
 	}
 	instance := params.ProviderInstance{

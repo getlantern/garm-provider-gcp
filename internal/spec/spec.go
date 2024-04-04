@@ -18,7 +18,9 @@ package spec
 import (
 	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
+	"io"
 	"maps"
 	"regexp"
 	"strings"
@@ -95,6 +97,9 @@ func jsonSchemaValidation(schema json.RawMessage) error {
 	extraSpecsLoader := gojsonschema.NewBytesLoader(schema)
 	result, err := gojsonschema.Validate(schemaLoader, extraSpecsLoader)
 	if err != nil {
+		if errors.Is(err, io.EOF) {
+			return nil
+		}
 		return fmt.Errorf("failed to validate schema: %w", err)
 	}
 	if !result.Valid() {
@@ -106,11 +111,10 @@ func jsonSchemaValidation(schema json.RawMessage) error {
 func newExtraSpecsFromBootstrapData(data params.BootstrapInstance) (*extraSpecs, error) {
 	spec := &extraSpecs{}
 
-	if err := jsonSchemaValidation(data.ExtraSpecs); err != nil {
-		return nil, fmt.Errorf("failed to validate extra specs: %w", err)
-	}
-
 	if len(data.ExtraSpecs) > 0 {
+		if err := jsonSchemaValidation(data.ExtraSpecs); err != nil {
+			return nil, fmt.Errorf("failed to validate extra specs: %w", err)
+		}
 		if err := json.Unmarshal(data.ExtraSpecs, spec); err != nil {
 			return nil, fmt.Errorf("failed to unmarshal extra specs: %w", err)
 		}
